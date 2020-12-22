@@ -1,6 +1,6 @@
 // キャッシュの名前
 const NAME = 'pwa-sample-caches-';
-const VERSION = '028';
+const VERSION = '029';
 const CACHE_NAME = NAME + VERSION;
 // キャッシュするファイルを指定
 var urlsToCache = [
@@ -36,7 +36,8 @@ self.addEventListener('install', (event) => {
                 return cache.addAll(urlsToCache);
             })
             .then(() => {
-                location.href = "/fuga/index.html"
+                console.log('installed')
+                event.waitUntil(self.skipWaiting());
             })
   );
 });
