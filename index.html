@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="manifest.json">
-    <!-- <title>Tetris_app</title> -->
-  </head>
-  <body>
-    <div>index</div>
-    <div><a href="hoge/index.html">hoge/index</a></div>
-    version026
-    <!-- <div><a href="hoge/no_cache.html">hoge/no_cache</a></div> -->
 
-    <!-- カメラ -->
-    <!-- <button>take a snapshot</button>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+  <!-- <title>Tetris_app</title> -->
+</head>
+
+<body>
+  <div>index</div>
+  <div><a href="hoge/index.html">hoge/index</a></div>
+  version027
+  <!-- <div><a href="hoge/no_cache.html">hoge/no_cache</a></div> -->
+
+  <!-- カメラ -->
+  <!-- <button>take a snapshot</button>
     <video id="camera"></video> -->
 
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').then(function(registration) {
-          // if (typeof registration.update == 'function') {
-          //   registration.update();
-          // }
-          // registration.onupdatefound = function() {
-          //   console.log("アップデーと");
-          //   registration.update();
-          // }
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }).catch(function(err) {
-          console.log('ServiceWorker registration failed: ', err);
-        });
-      }
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').then(function (registration) {
+        // if (typeof registration.update == 'function') {
+        //   registration.update();
+        // }
+        // registration.onupdatefound = function() {
+        //   console.log("アップデーと");
+        //   registration.update();
+        // }
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }).catch(function (err) {
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    }
 
       // navigator.serviceWorker.getRegistrations()
       // .then(registrations => {
@@ -95,6 +97,7 @@
       // } else {
       //   setManifest('manifest.json')
       // }
-    </script>
-   </body>
+  </script>
+</body>
+
 </html>
