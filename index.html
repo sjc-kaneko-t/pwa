@@ -23,7 +23,7 @@
   <script>
     let page = localStorage.getItem('page')
     if (page) {
-      localStorage.setItem('page', null)
+      localStorage.removeItem('page')
       location.href = page
     }
 
