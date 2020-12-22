@@ -11,7 +11,7 @@
 <body>
   <div>index</div>
   <div><a href="hoge/index.html">hoge/index</a></div>
-  version035
+  version036
   <!-- <div><a href="hoge/no_cache.html">hoge/no_cache</a></div> -->
 
   <!-- カメラ -->
@@ -33,6 +33,15 @@
         console.log('ServiceWorker registration failed: ', err);
       });
     }
+
+    serviceWorker.register({
+      onUpdate: function (registration) {
+        if (registration.waiting) {
+          alert('New Version!!')
+          window.location.reload();
+        }
+      }
+    });
 
     // navigator.serviceWorker.getRegistrations()
     // .then(registrations => {
