@@ -1,6 +1,6 @@
 // キャッシュの名前
 const NAME = 'pwa-sample-caches-';
-const VERSION = '032';
+const VERSION = '033';
 const CACHE_NAME = NAME + VERSION;
 // キャッシュするファイルを指定
 var urlsToCache = [
@@ -38,6 +38,7 @@ self.addEventListener('install', (event) => {
             .then(() => {
                 console.log('installed')
                 event.waitUntil(self.skipWaiting());
+                window.location.reload();
             })
   );
 });
