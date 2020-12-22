@@ -13,7 +13,7 @@
 <body>
   <div>index</div>
   <div><a href="hoge/index.html">hoge/index</a></div>
-  version046
+  version047
   <!-- <div><a href="hoge/no_cache.html">hoge/no_cache</a></div> -->
 
   <!-- カメラ -->
@@ -21,12 +21,6 @@
     <video id="camera"></video> -->
 
   <script>
-    let page = localStorage.getItem('page')
-    if (page) {
-      localStorage.removeItem('page')
-      location.href = page
-    }
-
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').then(function (registration) {
         // if (typeof registration.update == 'function') {
@@ -37,6 +31,12 @@
         //   registration.update();
         // }
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        let page = localStorage.getItem('page')
+        if (page) {
+          localStorage.removeItem('page')
+          location.href = page
+        }
+
       }).catch(function (err) {
         console.log('ServiceWorker registration failed: ', err);
       });
