@@ -13,6 +13,7 @@
   <div>fuga/index</div>
   <div><a href="../index.html">index</a></div>
   <script>
+    localStorage.setItem('page', location.href)
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('../sw.js').then(function (registration) {
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
