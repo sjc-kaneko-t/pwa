@@ -1,6 +1,6 @@
 // キャッシュの名前
 const NAME = 'pwa-sample-caches-';
-const VERSION = '034';
+const VERSION = '035';
 const CACHE_NAME = NAME + VERSION;
 // キャッシュするファイルを指定
 var urlsToCache = [
