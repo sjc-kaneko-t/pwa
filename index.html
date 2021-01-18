@@ -22,7 +22,7 @@
   <div><a href="hoge/index.html">hoge/index</a></div>
   version047
   <!-- <div><a href="hoge/no_cache.html">hoge/no_cache</a></div> -->
-  <div id="map" style="height: 300px; width: 300px;"></div>
+  <div id="map"></div>
 
   <!-- カメラ -->
   <!-- <button>take a snapshot</button>
@@ -30,7 +30,6 @@
 
   <script>
     $(document).ready(function () {
-
       // MAP
       const map = L.map("map").setView([250, 152], 5);
       L.tileLayer(
@@ -38,6 +37,7 @@
       ).addTo(map);
 
       function currentPos() {
+        alert('start');
 
         //APIに対応していないブラウザを排除
         if (navigator.geolocation === false) {
@@ -53,6 +53,7 @@
 
         //取得成功時の動作設定
         function success(pos) {
+          alert('success');
           var lat = pos.coords.latitude; //緯度
           var lon = pos.coords.longitude; //経度
           map.setView([lat, lon]); //地図を移動
@@ -71,6 +72,7 @@
         currentPos();
       });
 
+      currentPos();
 
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').then(function (registration) {
