@@ -37,7 +37,6 @@
       ).addTo(map);
 
       function currentPos() {
-        alert('start');
 
         //APIに対応していないブラウザを排除
         if (navigator.geolocation === false) {
@@ -47,13 +46,12 @@
         //位置情報取得オプションを設定(後述)
         var options = {
           enableHighAccuracy: false,
-          timeout: 5000,
+          timeout: 10000,
           maximumAge: 0
         };
 
         //取得成功時の動作設定
         function success(pos) {
-          alert('success');
           var lat = pos.coords.latitude; //緯度
           var lon = pos.coords.longitude; //経度
           map.setView([lat, lon]); //地図を移動
@@ -61,7 +59,7 @@
 
         //取得失敗時(タイムアウトなど)の動作設定
         function error(err) {
-          alert("位置情報を取得できませんでした。デバイスに位置情報を取得できる装置が無い、または取得に時間がかかっている、またはデバイスやブラウザ設定でブロックされています");
+          alert("位置情報を取得できませんでした。(" + err.code + ")");
         }
 
         //コマンドを実行
