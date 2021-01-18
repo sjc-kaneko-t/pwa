@@ -8,6 +8,13 @@
   <meta http-equiv="Pragma" content="no-cache">
   <link rel="manifest" href="manifest.json">
   <!-- <title>Tetris_app</title> -->
+  <!--leaflet-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+
+  <!--demo stuff-->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 </head>
 
 <body>
@@ -15,95 +22,77 @@
   <div><a href="hoge/index.html">hoge/index</a></div>
   version047
   <!-- <div><a href="hoge/no_cache.html">hoge/no_cache</a></div> -->
+  <div id="map" style="height: 300px; width: 300px;"></div>
 
   <!-- カメラ -->
   <!-- <button>take a snapshot</button>
     <video id="camera"></video> -->
 
   <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').then(function (registration) {
-        // if (typeof registration.update == 'function') {
-        //   registration.update();
-        // }
-        // registration.onupdatefound = function() {
-        //   console.log("アップデーと");
-        //   registration.update();
-        // }
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        let page = localStorage.getItem('page')
-        if (page) {
-          localStorage.removeItem('page')
-          location.href = page
+    $(document).ready(function () {
+
+      // MAP
+      const map = L.map("map").setView([250, 152], 5);
+      L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      ).addTo(map);
+
+      function currentPos() {
+
+        //APIに対応していないブラウザを排除
+        if (navigator.geolocation === false) {
+          alert("位置情報を取得できません。ブラウザが対応していません。");
         }
 
-      }).catch(function (err) {
-        console.log('ServiceWorker registration failed: ', err);
+        //位置情報取得オプションを設定(後述)
+        var options = {
+          enableHighAccuracy: false,
+          timeout: 5000,
+          maximumAge: 0
+        };
+
+        //取得成功時の動作設定
+        function success(pos) {
+          var lat = pos.coords.latitude; //緯度
+          var lon = pos.coords.longitude; //経度
+          map.setView([lat, lon]); //地図を移動
+        }
+
+        //取得失敗時(タイムアウトなど)の動作設定
+        function error(err) {
+          alert("位置情報を取得できませんでした。デバイスに位置情報を取得できる装置が無い、または取得に時間がかかっている、またはデバイスやブラウザ設定でブロックされています");
+        }
+
+        //コマンドを実行
+        navigator.geolocation.getCurrentPosition(success, error, options);
+      }
+
+      navigator.geolocation.watchPosition(function () {
+        currentPos();
       });
-    }
-    // navigator.serviceWorker.getRegistrations()
-    // .then(registrations => {
-    //   for(let registration of registrations) {
-    //     registration.unregister();
-    //   }
-    // });
-    // window.location.reload(true);
 
-    // カメラ部分-------------------------------------------------------
-    // const vid = document.getElementById('camera');
-    // navigator.mediaDevices.getUserMedia({
-    //   audio: false,
-    //   video: true
-    //   // video: { facingMode: { exact: "environment" } }
-    // }).then(stream => {
-    //   vid.srcObject = stream;
-    //   vid.play();
-    // })
-    // .then(()=>{ // enable the button
-    //   const btn = document.querySelector('button');
-    //   btn.disabled = false;
-    //   btn.onclick = e => {
-    //     takeASnap()
-    //     .then(download);
-    //   };
-    // })
-    // .catch(e=>console.log('please use the fiddle instead'));
 
-    // function takeASnap(){
-    //   const canvas = document.createElement('canvas'); // create a canvas
-    //   const ctx = canvas.getContext('2d'); // get its context
-    //   canvas.width = vid.videoWidth; // set its size to the one of the video
-    //   canvas.height = vid.videoHeight;
-    //   ctx.drawImage(vid, 0,0); // the video
-    //   return new Promise((res, rej)=>{
-    //     canvas.toBlob(res, 'image/jpeg'); // request a Blob from the canvas
-    //   });
-    // }
-    // function download(blob){
-    //   // uses the <a download> to download a Blob
-    //   let a = document.createElement('a');
-    //   a.href = URL.createObjectURL(blob);
-    //   a.download = 'screenshot.jpg';
-    //   document.body.appendChild(a);
-    //   a.click();
-    // }
-    // カメラ部分-------------------------------------------------------
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').then(function (registration) {
+          // if (typeof registration.update == 'function') {
+          //   registration.update();
+          // }
+          // registration.onupdatefound = function() {
+          //   console.log("アップデーと");
+          //   registration.update();
+          // }
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          let page = localStorage.getItem('page')
+          if (page) {
+            localStorage.removeItem('page')
+            location.href = page
+          }
 
-    // manifestのlinkタグを生成
-    // function setManifest(path) {
-    //   const manifest = document.createElement('link');
-    //   manifest.rel = 'manifest';
-    //   manifest.href = path;
-    //   document.head.appendChild(manifest);
-    // }
-
-    // // OSに応じて読み込むmanifestを変更
-    // var userAgent = navigator.userAgent.toLowerCase();
-    // if (userAgent.indexOf("iphone") > 0 || userAgent.indexOf("ipad") > 0) {
-    //   setManifest('manifest_ios.json')
-    // } else {
-    //   setManifest('manifest.json')
-    // }
+        }).catch(function (err) {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      }
+    });
   </script>
 </body>
 
