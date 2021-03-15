@@ -20,7 +20,7 @@
 <body>
   <div>index</div>
   <div><a href="hoge/index.html">hoge/index</a></div>
-  <div><a href="http://tukasablog.com/1478.html" target="_blank">ほいほい</a></div>
+  <div><a href="https://www.google.com/search" target="_blank" rel="noopener">検索</a></div>
   version047
   <!-- <div><a href="hoge/no_cache.html">hoge/no_cache</a></div> -->
   <div id="map" style="height: 300px;width: 300px;"></div>
@@ -37,57 +37,8 @@
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       ).addTo(map);
 
-      function currentPos() {
-
-        //APIに対応していないブラウザを排除
-        if (navigator.geolocation === false) {
-          alert("位置情報を取得できません。ブラウザが対応していません。");
-        }
-
-        //位置情報取得オプションを設定(後述)
-        var options = {
-          enableHighAccuracy: false,
-          timeout: 10000,
-          maximumAge: 0
-        };
-
-        //取得成功時の動作設定
-        function success(pos) {
-          var lat = pos.coords.latitude; //緯度
-          var lon = pos.coords.longitude; //経度
-          map.setView([lat, lon]); //地図を移動
-        }
-
-        //取得失敗時(タイムアウトなど)の動作設定
-        function error(err) {
-          alert("位置情報を取得できませんでした。(" + err.code + ")");
-        }
-
-        //コマンドを実行
-        navigator.geolocation.getCurrentPosition(success, error, options);
-      }
-
-      navigator.geolocation.watchPosition(function () {
-        currentPos();
-      });
-
-      currentPos();
-
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js').then(function (registration) {
-          // if (typeof registration.update == 'function') {
-          //   registration.update();
-          // }
-          // registration.onupdatefound = function() {
-          //   console.log("アップデーと");
-          //   registration.update();
-          // }
-          console.log('ServiceWorker registration successful with scope: ', registration.scope);
-          let page = localStorage.getItem('page')
-          if (page) {
-            localStorage.removeItem('page')
-            location.href = page
-          }
 
         }).catch(function (err) {
           console.log('ServiceWorker registration failed: ', err);
